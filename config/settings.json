@@ -1,0 +1,44 @@
+[
+    {
+        "type": "numeric",
+        "title": "Częstotliwość środkowa",
+        "desc": "Częstotliwość środkowa dla generator nr 1",
+        "section": "F1",
+        "key": "F1Center"
+    },
+    {
+        "type": "numeric",
+        "title": "Span",
+        "desc": "Szerokoś pasma dla generator nr 1",
+        "section": "F1",
+        "key": "F1Span"
+    },
+    {
+        "type": "numeric",
+        "title": "RBW",
+        "desc": "RBW dla generator nr 1",
+        "section": "F1",
+        "key": "F1rbw"
+    },
+    {
+        "type": "numeric",
+        "title": "Reference Level",
+        "desc":"Ustawienie poiomu odnisienia dla generatora nr1",
+        "section": "F1",
+        "key": "F1reflevel"
+    },
+    {
+        "type": "numeric",
+        "title": "Trace Length",
+        "desc":"Liczba próbek dla generatora nr1",
+        "section": "F1",
+        "key": "F1tracelen"
+    },
+    {
+    "type":"bool",
+    "title": "Aktywny",
+    "desc":"Wł/Wył pomiary dla generatora nr 1",
+    "section": "F1",
+    "key": "F1enable"
+  }
+]
