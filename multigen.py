@@ -2,17 +2,32 @@
 from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.settings import SettingsWithSidebar
+from kivy.uix.popup import Popup
 from kivy.lang import Builder
 from kivy.app import App
 
 from config.settings_panel_config import settingsTemplate
 
 FREQ_RANGE_NUM=10
+class NewPointPopup(Popup):
+    def __init__(self,parent_widget,**kwargs):
+        super(NewPointPopup,self).__init__(**kwargs)
+        self.parent_widget=parent_widget
+
+    def dismiss_add(self):
+
+        if (self.pointName.text!=''):
+            self.parent_widget.ids.measurePoint_spinner.values.append(self.pointName.text)
+            self.dismiss()
+
 class Multigen(BoxLayout):
     # def __init__(self,**kwargs):
     #     super(Multigen,self).__init__(**kwargs)
     #     self.ids.Gen1Button.text=app.config.get("F1","F1Center")
-    pass
+    def add_measurePoint(self):
+        newpoint=NewPointPopup(self)
+        newpoint.open()
+
 
 class PlotArea(Label):
     pass
@@ -44,12 +59,9 @@ class MultigenApp(App):
         config.setdefaults('F9',{'f9enable':1,'f9center':169000000,'f9span':5000000,'f9rbw':100000,'f9reflevel':5000000,'f9tracelen':4096})
 
     def build_settings(self,settings):
-        # with open('config\settings.json',encoding='utf8') as settingsfile:
-        #     settings.add_json_panel(u"Ustawienia dla generatora 1",self.config,data=settingsfile.read())
-        #print(Tempsettings.format('1','1'))
-        #settings.add_json_panel(u"Ustawienia dla generatora 1",self.config,data=f1settings)
+
         for gen_no in range(1,FREQ_RANGE_NUM):
-            settings.add_json_panel(u"Generator {}".format(str(gen_no)),self.config,data=settingsTemplate.format(str(gen_no),str(gen_no)))
+            settings.add_json_panel(u"Zakres {}".format(str(gen_no)),self.config,data=settingsTemplate.format(str(gen_no),str(gen_no)))
 
 if __name__=='__main__':
     MultigenApp().run()

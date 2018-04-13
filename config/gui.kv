@@ -1,29 +1,21 @@
 # -*- coding: utf-8 -*-
 <Multigen>:
     orientation:'vertical'
-    confFileInput:confFileInput
 
     GridLayout:
-        cols:3
+        cols:5
         size_hint_y:.05
-        Label:
-            id:confLabel
-            text:"Plik konfiguracyjny:"
-            size_hint_x: 0.2
-            valign:'middle'
-            halign: 'left'
-            #text_size: self.text_size
-            size:self.texture_size
+        Spinner:
+            id:measurePoint_spinner
+            text_autoupdate:True
+            values:("Punkt1",)
 
-        TextInput:
-            id:confFileInput
-            multiline:False
-            text:"C:\config.json"
-            size_hint_y: None
-            size_hint_x: .6
-            height: self.minimum_height
         Button:
-            text:"Konfiguracja"
+            text:"+"
+            on_release:root.add_measurePoint()
+            size_hint_x:.2
+        Button:
+            text:"Konfig"
             on_release:app.open_settings()
             size_hint_x:.2
     GridLayout:
@@ -36,31 +28,71 @@
             ToggleButton:
                 id:Gen1Button
                 group:'freq'
-                text:app.config.get("F1","F1Center")
+                text:str(int(app.config.get("F1","F1Center"))/(1000000)) +" MHz"
+            ToggleButton:
+                group:'freq'
+
+                text:str(int(app.config.get("F2","F2Center"))/(1000000)) +" MHz"
+            ToggleButton:
+                group:'freq'
+
+                text:str(int(app.config.get("F3","F3Center"))/(1000000)) +" MHz"
+            ToggleButton:
+                group:'freq'
+                text:str(int(app.config.get("F4","F4Center"))/(1000000)) +" MHz"
+            ToggleButton:
+                group:'freq'
+
+                text:str(int(app.config.get("F5","F5Center"))/(1000000)) +" MHz"
+            ToggleButton:
+                group:'freq'
+
+                text:str(int(app.config.get("F6","F6Center"))/(1000000)) +" MHz"
+            ToggleButton:
+                group:'freq'
+
+                text:str(int(app.config.get("F7","F7Center"))/(1000000)) +" MHz"
+            ToggleButton:
+                group:'freq'
+
+                text:str(int(app.config.get("F8","F8Center"))/(1000000)) +" MHz"
             ToggleButton:
                 group:'freq'
                 text:u"2400 MHz"
-            ToggleButton:
-                group:'freq'
-                text:u"2400 MHz"
-            ToggleButton:
-                group:'freq'
-                text:u"2400 MHz"
-            ToggleButton:
-                group:'freq'
-                text:u"2400 MHz"
-            ToggleButton:
-                group:'freq'
-                text:u"2400 MHz"
-            ToggleButton:
-                group:'freq'
-                text:u"2400 MHz"
-            ToggleButton:
-                group:'freq'
-                text:u"2400 MHz"
-            ToggleButton:
-                group:'freq'
-                text:u"2400 MHz"
+                text:str(int(app.config.get("F9","F9Center"))/(1000000)) +" MHz"
         PlotArea:
             size_hint_x:.8
             text:u'Tu będzie wykres'
+
+<NewPointPopup>:
+    pointName:pointName
+    title:'Dodaj nowy punkt'
+    title_align:'center'
+    auto_dismiss: False
+    size_hint:0.5,0.5
+    GridLayout:
+        cols:1
+        Label:
+            text:'Nazwa punktu pomiarwego:'
+            halign: 'right'
+            size_hint_y:0.2
+        TextInput:
+            id:pointName
+            size_hint_y:0.25
+            multiline:False
+            text:'nowypunkt'
+        Label:
+            text:'Opis punktu pomiarowego:'
+            halign: 'right'
+            size_hint_y:0.2
+        TextInput:
+            text:''
+        GridLayout:
+            cols:2
+            size_hint_y:0.2
+            Button:
+                text: 'Dodaj'
+                on_release: root.dismiss_add()
+            Button:
+                text: 'Anuluj'
+                on_release: root.dismiss()
