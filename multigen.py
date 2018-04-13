@@ -2,14 +2,33 @@
 from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.settings import SettingsWithSidebar
+from kivy.properties import ListProperty
 from kivy.uix.popup import Popup
 from kivy.lang import Builder
 from kivy.app import App
 
 from config.settings_panel_config import settingsTemplate
 
+import uuid
+
 FREQ_RANGE_NUM=10
+
+class MeasurementPoint():
+    """
+    Class of measurment point containning all data according to single measurement point
+    """
+    def __init__(self,pointsList,pointName,**kwargs):
+        super(MeasurementPoint,self).__init__(**kwargs)
+        self.pointsList=pointsList
+
+        self.name=pointName
+        self.uuid=uuid.uuid4().hex
+        self.pointsList.append(5)
+
 class NewPointPopup(Popup):
+    """
+        Class of popup dialiog for creating new measurement point
+    """
     def __init__(self,parent_widget,**kwargs):
         super(NewPointPopup,self).__init__(**kwargs)
         self.parent_widget=parent_widget
@@ -17,13 +36,19 @@ class NewPointPopup(Popup):
     def dismiss_add(self):
 
         if (self.pointName.text!=''):
-            self.parent_widget.ids.measurePoint_spinner.values.append(self.pointName.text)
+            self.parent_widget.ids.measurementPoint_spinner.values.append(self.pointName.text)
+            newPoint=MeasurementPoint(self.parent_widget.measurementPointsList,self.pointName.text)
+            print(newPoint.uuid)
             self.dismiss()
 
 class Multigen(BoxLayout):
-    # def __init__(self,**kwargs):
-    #     super(Multigen,self).__init__(**kwargs)
-    #     self.ids.Gen1Button.text=app.config.get("F1","F1Center")
+    """
+        Main class containning root widget
+    """
+    def __init__(self,**kwargs):
+        super(Multigen,self).__init__(**kwargs)
+        self.measurementPointsList=ListProperty([])
+
     def add_measurePoint(self):
         newpoint=NewPointPopup(self)
         newpoint.open()
