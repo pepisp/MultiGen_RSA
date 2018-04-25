@@ -24,6 +24,8 @@ class MeasurementPoint():
         self.name=pointName
         self.description=pointDesc
         self.id=int(datetime.now().timestamp())
+    def __str__(self):
+        return self.name
 
 class WarnnigPopup(Popup):
     pass
@@ -47,8 +49,8 @@ class NewPointPopup(Popup):
                     popup.open()
                     return True
             newPoint=MeasurementPoint(self.pointName.text,self.pointDesc.text)
-            self.parent_widget.measurementPointsDict[str(newPoint.id)]=newPoint
-            print(self.parent_widget.measurementPointsDict.keys())
+            self.parent_widget.measurementPointsDict[newPoint.id]=newPoint
+            #print(self.parent_widget.measurementPointsDict.keys())
             self.dismiss()
 
 class Multigen(BoxLayout):
@@ -73,7 +75,7 @@ class Multigen(BoxLayout):
         #print('Zmiana slownika... Podmeiniam listę')
         self.ids.measurementPoint_spinner.values=[]
         #print(newPoints.keys())
-        for point in sorted(newPoints.keys()):
+        for point in sorted(newPoints,reverse=True):
             self.ids.measurementPoint_spinner.values.append(newPoints[point].name)
 
 
