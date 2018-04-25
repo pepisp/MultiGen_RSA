@@ -66,6 +66,7 @@
 
 <NewPointPopup>:
     pointName:pointName
+    pointDesc:pointDesc
     title:'Dodaj nowy punkt'
     title_align:'center'
     auto_dismiss: False
@@ -82,6 +83,7 @@
             multiline:False
             text:'nowypunkt'
         Label:
+            id:pointDesc
             text:'Opis punktu pomiarowego:'
             halign: 'right'
             size_hint_y:0.2
@@ -96,3 +98,17 @@
             Button:
                 text: 'Anuluj'
                 on_release: root.dismiss()
+<WarnnigPopup>:
+    title:'Uwaga!!!'
+    title_align:'center'
+    auto_dismiss: True
+    size_hint:0.5,0.5
+    GridLayout:
+        cols:1
+        Label:
+            text:'Punkt o tej nazwie już istnieje'
+
+        Button:
+            text: 'OK'
+            size_hint_y:0.2
+            on_release: root.dismiss()

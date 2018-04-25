@@ -2,14 +2,16 @@
 from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.settings import SettingsWithSidebar
-from kivy.properties import ListProperty
+from kivy.properties import DictProperty,ListProperty
 from kivy.uix.popup import Popup
 from kivy.lang import Builder
 from kivy.app import App
 
 from config.settings_panel_config import settingsTemplate
 
-import uuid
+#import uuid
+from datetime import datetime
+
 
 FREQ_RANGE_NUM=10
 
@@ -17,13 +19,15 @@ class MeasurementPoint():
     """
     Class of measurment point containning all data according to single measurement point
     """
-    def __init__(self,pointsList,pointName,**kwargs):
+    def __init__(self,pointName,pointDesc,**kwargs):
         super(MeasurementPoint,self).__init__(**kwargs)
-        self.pointsList=pointsList
-
         self.name=pointName
-        self.uuid=uuid.uuid4().hex
-        self.pointsList.append(5)
+        self.description=pointDesc
+        self.id=int(datetime.now().timestamp())
+
+class WarnnigPopup(Popup):
+    pass
+
 
 class NewPointPopup(Popup):
     """
@@ -35,23 +39,42 @@ class NewPointPopup(Popup):
 
     def dismiss_add(self):
 
+
         if (self.pointName.text!=''):
-            self.parent_widget.ids.measurementPoint_spinner.values.append(self.pointName.text)
-            newPoint=MeasurementPoint(self.parent_widget.measurementPointsList,self.pointName.text)
-            print(newPoint.uuid)
+            for point in self.parent_widget.measurementPointsDict:      #Check if point of that name already exists and prevent adding new one
+                if self.parent_widget.measurementPointsDict[point].name==self.pointName.text:
+                    popup = WarnnigPopup()
+                    popup.open()
+                    return True
+            newPoint=MeasurementPoint(self.pointName.text,self.pointDesc.text)
+            self.parent_widget.measurementPointsDict[str(newPoint.id)]=newPoint
+            print(self.parent_widget.measurementPointsDict.keys())
             self.dismiss()
 
 class Multigen(BoxLayout):
     """
         Main class containning root widget
     """
+
+    measurementPointsDict=DictProperty()
     def __init__(self,**kwargs):
         super(Multigen,self).__init__(**kwargs)
-        self.measurementPointsList=ListProperty([])
+
 
     def add_measurePoint(self):
         newpoint=NewPointPopup(self)
         newpoint.open()
+
+    def on_measurementPointsDict(self,instance,newPoints):
+        """
+            Binding for measurementPoints dict change. It updatest spinner list of points.
+        """
+
+        #print('Zmiana slownika... Podmeiniam listę')
+        self.ids.measurementPoint_spinner.values=[]
+        #print(newPoints.keys())
+        for point in sorted(newPoints.keys()):
+            self.ids.measurementPoint_spinner.values.append(newPoints[point].name)
 
 
 class PlotArea(Label):
