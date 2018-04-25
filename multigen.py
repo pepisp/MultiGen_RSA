@@ -77,7 +77,11 @@ class Multigen(BoxLayout):
         #print(newPoints.keys())
         for point in sorted(newPoints,reverse=True):
             self.ids.measurementPoint_spinner.values.append(newPoints[point].name)
+        self.ids.measurementPoint_spinner.text=self.ids.measurementPoint_spinner.values[-1]
+        #TODO Remember to update plot area
 
+    def selctedNewPoint(self):
+        self.ids.plotArea.text='Tu będzie wykres dla punktu '+self.ids.measurementPoint_spinner.text
 
 class PlotArea(Label):
     pass

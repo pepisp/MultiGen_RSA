@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 <Multigen>:
     orientation:'vertical'
-
+    plotArea:plotArea
     GridLayout:
         cols:5
         size_hint_y:.05
         Spinner:
             id:measurementPoint_spinner
             text_autoupdate:True
-            
+            on_press:root.selctedNewPoint()
 
         Button:
             text:"+"
@@ -61,6 +61,7 @@
                 text:u"2400 MHz"
                 text:str(int(app.config.get("F9","F9Center"))/(1000000)) +" MHz"
         PlotArea:
+            id:plotArea
             size_hint_x:.8
             text:u'Tu będzie wykres'
 
