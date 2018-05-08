@@ -1,64 +1,90 @@
 # -*- coding: utf-8 -*-
+<FrequencyToggleButton@ToggleButton>:
+    group:'freq'
+    allow_no_selection:False
+
+
 <Multigen>:
     orientation:'vertical'
     plotArea:plotArea
     GridLayout:
         cols:5
         size_hint_y:.05
+        size_hint_max_y:40
+        Button:
+            # background_normal:''
+            # background_color:(0,0,0,0)
+            size_hint_max_x:40
+            on_release:app.open_settings()
+            size_hint_x:.2
+            Image:
+                source: 'img/settings.png'
+                # y: self.parent.y
+                # x: self.parent.x
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+                size: 32, 32
+                allow_stretch: False
         Spinner:
+            size_hint_max_x:300
+            canvas:
+                Color:
+                    rgba: 1, .3, .8, .5
             id:measurementPoint_spinner
             text_autoupdate:True
             on_press:root.selctedNewPoint()
 
         Button:
-            text:"+"
+            #background_normal:''
+            #background_color:(0,0,0,0)
+            size_hint_max_x:40
+            #on_press:self.background_color=(1,0,0,1)
             on_release:root.add_measurePoint()
             size_hint_x:.2
-        Button:
-            text:"Konfig"
-            on_release:app.open_settings()
-            size_hint_x:.2
+            Image:
+                source: 'img/plus.png'
+                # y: self.parent.y
+                # x: self.parent.x
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+                size: 32, 32
+                allow_stretch: False
+
     GridLayout:
         cols:2
         size_hint_y:.9
 
         GridLayout:
             cols:1
-            size_hint_x:.2
-            ToggleButton:
+            size_hint_x:.1
+            size_hint_max_x:100
+            FrequencyToggleButton:
                 id:Gen1Button
-                group:'freq'
+                state:'down'
                 text:str(int(app.config.get("F1","F1Center"))/(1000000)) +" MHz"
-            ToggleButton:
-                group:'freq'
+            FrequencyToggleButton:
 
                 text:str(int(app.config.get("F2","F2Center"))/(1000000)) +" MHz"
-            ToggleButton:
-                group:'freq'
+            FrequencyToggleButton:
 
                 text:str(int(app.config.get("F3","F3Center"))/(1000000)) +" MHz"
-            ToggleButton:
-                group:'freq'
+            FrequencyToggleButton:
+
                 text:str(int(app.config.get("F4","F4Center"))/(1000000)) +" MHz"
-            ToggleButton:
-                group:'freq'
+            FrequencyToggleButton:
 
                 text:str(int(app.config.get("F5","F5Center"))/(1000000)) +" MHz"
-            ToggleButton:
-                group:'freq'
+            FrequencyToggleButton:
 
                 text:str(int(app.config.get("F6","F6Center"))/(1000000)) +" MHz"
-            ToggleButton:
-                group:'freq'
+            FrequencyToggleButton:
 
                 text:str(int(app.config.get("F7","F7Center"))/(1000000)) +" MHz"
-            ToggleButton:
-                group:'freq'
+            FrequencyToggleButton:
 
                 text:str(int(app.config.get("F8","F8Center"))/(1000000)) +" MHz"
-            ToggleButton:
-                group:'freq'
-                text:u"2400 MHz"
+            FrequencyToggleButton:
+
                 text:str(int(app.config.get("F9","F9Center"))/(1000000)) +" MHz"
         PlotArea:
             id:plotArea
@@ -68,10 +94,12 @@
 <NewPointPopup>:
     pointName:pointName
     pointDesc:pointDesc
+
     title:'Dodaj nowy punkt'
     title_align:'center'
     auto_dismiss: False
     size_hint:0.5,0.5
+    size_hint_max:300,300
     GridLayout:
         cols:1
         Label:
@@ -102,8 +130,12 @@
 <WarnnigPopup>:
     title:'Uwaga!!!'
     title_align:'center'
-    auto_dismiss: True
+    separator_color:1,0,0,1
+    background_color:0,0,0,0
+    auto_dismiss: False
+
     size_hint:0.5,0.5
+    size_hint_max:300,200
     GridLayout:
         cols:1
         Label:

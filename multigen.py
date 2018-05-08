@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+from kivy.config import Config
+Config.set('graphics', 'width', '1200')
+Config.set('graphics', 'height', '800')
+Config.set('graphics', 'minimum_width', '800')
+Config.set('graphics', 'minimum_height', '600')
+
 from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.settings import SettingsWithSidebar
@@ -6,14 +12,16 @@ from kivy.properties import DictProperty,ListProperty
 from kivy.uix.popup import Popup
 from kivy.lang import Builder
 from kivy.app import App
-
 from config.settings_panel_config import settingsTemplate
 
-#import uuid
 from datetime import datetime
 
 
+
 FREQ_RANGE_NUM=10
+
+
+
 
 class MeasurementPoint():
     """
@@ -78,9 +86,13 @@ class Multigen(BoxLayout):
         for point in sorted(newPoints,reverse=True):
             self.ids.measurementPoint_spinner.values.append(newPoints[point].name)
         self.ids.measurementPoint_spinner.text=self.ids.measurementPoint_spinner.values[-1]
-        #TODO Remember to update plot area
+        self.selctedNewPoint()
+
 
     def selctedNewPoint(self):
+        """
+            Called when user has changed selection of point in spinner
+        """
         self.ids.plotArea.text='Tu będzie wykres dla punktu '+self.ids.measurementPoint_spinner.text
 
 class PlotArea(Label):
@@ -98,6 +110,7 @@ class MultigenApp(App):
 
         #multigen.ids.Gen1Button.text=self.config.get("F1","F1Center")
         self.use_kivy_settings=False
+
         return multigen
 
     def build_config(self,config):
