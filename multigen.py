@@ -15,6 +15,8 @@ from kivy.app import App
 from config.settings_panel_config import settingsTemplate
 
 from datetime import datetime
+from rsa_spectrum import RSA_DEVICE
+
 
 
 
@@ -68,6 +70,7 @@ class Multigen(BoxLayout):
 
     measurementPointsDict=DictProperty()
     def __init__(self,**kwargs):
+        self.device=RSA_DEVICE()
         super(Multigen,self).__init__(**kwargs)
 
 
@@ -89,11 +92,26 @@ class Multigen(BoxLayout):
         self.selctedNewPoint()
 
 
-    def selctedNewPoint(self):
+    def selectedNewPoint(self):
         """
             Called when user has changed selection of point in spinner
         """
         self.ids.plotArea.text='Tu będzie wykres dla punktu '+self.ids.measurementPoint_spinner.text
+
+    def rsaConnection(self):
+        if self.device.deviceID==1024:
+            self.device.search()
+            self.device.connect()
+        else:
+            if self.device.connectionStatus:
+                self.device.disconnect()
+            else:
+                self.device.connect()
+        if self.device.connectionStatus:
+            self.ids.connection_button_image.source='img/connected.png'
+        else:
+            self.ids.connection_button_image.source='img/disconnected.png'
+        print(self.device.connectionStatus)
 
 class PlotArea(Label):
     pass
