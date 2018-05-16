@@ -148,5 +148,22 @@ class MultigenApp(App):
         for gen_no in range(1,FREQ_RANGE_NUM):
             settings.add_json_panel(u"Zakres {}".format(str(gen_no)),self.config,data=settingsTemplate.format(str(gen_no),str(gen_no)))
 
+    def on_config_change(self, config, section, key, value):
+        """
+            Function changing button labels on config change.
+        """
+        if section.startswith("Range"):
+            if key=="centerFreq":
+                self.root.ids[section+'Button'].text=str(int(self.config.get(section,"centerFreq"))/(1000000)) +" MHz"
+            if key=="enable":
+                self.root.ids[section+'Button'].disabled=not bool(int(value))
+                if self.root.ids[section+'Button'].disabled and self.root.ids[section+'Button'].state=='down':
+                    self.root.ids[section+'Button'].state='normal'
+                    for rangeButton in reversed(self.root.ids.rangeSelector.children):
+                        if rangeButton.disabled==False:
+                            rangeButton.state='down'
+                            break
+
+
 if __name__=='__main__':
     MultigenApp().run()

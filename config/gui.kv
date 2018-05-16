@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-<FrequencyToggleButton@ToggleButton>:
+<RangeToggleButton@ToggleButton>:
     group:'freq'
     allow_no_selection:False
 
@@ -85,37 +85,47 @@
         size_hint_y:.9
 
         GridLayout:
+            id:rangeSelector
             cols:1
             size_hint_x:.1
             size_hint_max_x:100
-            FrequencyToggleButton:
-                id:Gen1Button
+            RangeToggleButton:
+                id:Range1Button
                 state:'down'
                 text:str(int(app.config.get("Range1","centerFreq"))/(1000000)) +" MHz"
-            FrequencyToggleButton:
-
+                disabled: not bool(app.config.get("Range1","enable"))
+            RangeToggleButton:
+                id:Range2Button
                 text:str(int(app.config.get("Range2","centerFreq"))/(1000000)) +" MHz"
-            FrequencyToggleButton:
-
+                disabled:not bool(app.config.get("Range2","enable"))
+            RangeToggleButton:
+                id:Range3Button
                 text:str(int(app.config.get("Range3","centerFreq"))/(1000000)) +" MHz"
-            FrequencyToggleButton:
-
+                disabled:not bool(app.config.get("Range3","enable"))
+            RangeToggleButton:
+                id:Range4Button
                 text:str(int(app.config.get("Range4","centerFreq"))/(1000000)) +" MHz"
-            FrequencyToggleButton:
-
+                disabled:not bool(app.config.get("Range4","enable"))
+            RangeToggleButton:
+                id:Range5Button
                 text:str(int(app.config.get("Range5","centerFreq"))/(1000000)) +" MHz"
-            FrequencyToggleButton:
-
+                disabled:not bool(app.config.get("Range5","enable"))
+            RangeToggleButton:
+                id:Range6Button
                 text:str(int(app.config.get("Range6","centerFreq"))/(1000000)) +" MHz"
-            FrequencyToggleButton:
-
+                disabled:not bool(app.config.get("Range6","enable"))
+            RangeToggleButton:
+                id:Range7Button
                 text:str(int(app.config.get("Range7","centerFreq"))/(1000000)) +" MHz"
-            FrequencyToggleButton:
-
+                disabled:not bool(app.config.get("Range7","enable"))
+            RangeToggleButton:
+                id:Range8Button
                 text:str(int(app.config.get("Range8","centerFreq"))/(1000000)) +" MHz"
-            FrequencyToggleButton:
-
+                disabled:not bool(app.config.get("Range8","enable"))
+            RangeToggleButton:
+                id:Range9Button
                 text:str(int(app.config.get("Range9","centerFreq"))/(1000000)) +" MHz"
+                disabled:not bool(app.config.get("Range9","enable"))
         PlotArea:
             id:plotArea
             size_hint_x:.8
