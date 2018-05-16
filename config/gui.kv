@@ -8,24 +8,45 @@
     orientation:'vertical'
     plotArea:plotArea
     GridLayout:
-        cols:5
+        cols:6
         size_hint_y:.05
         size_hint_max_y:40
+
+        Image:
+            source: 'img/separator.png'
+            # y: self.parent.y
+            # x: self.parent.x
+            center_x: self.parent.center_x
+            center_y: self.parent.center_y
+            size_hint_max_x: 100
+            size_hint_y:32
+            allow_stretch: False
+
         Button:
-            # background_normal:''
-            # background_color:(0,0,0,0)
+            #background_normal:''
+            #background_color:(0,0,0,0)
             size_hint_max_x:40
-            on_release:root.rsaConnection()
+            #on_press:self.background_color=(1,0,0,1)
+            on_release:root.add_measurePoint()
             size_hint_x:.2
             Image:
-                id:connection_button_image
-                source: 'img/disconnected.png'
+                source: 'img/plus.png'
                 # y: self.parent.y
                 # x: self.parent.x
                 center_x: self.parent.center_x
                 center_y: self.parent.center_y
                 size: 32, 32
                 allow_stretch: False
+
+        Spinner:
+            size_hint_max_x:300
+            canvas:
+                Color:
+                    rgba: 1, .3, .8, .5
+            id:measurementPoint_spinner
+            text_autoupdate:True
+            on_press:root.selectedNewPoint()
+
         Widget:
 
         Button:
@@ -43,24 +64,15 @@
                 center_y: self.parent.center_y
                 size: 32, 32
                 allow_stretch: False
-        Spinner:
-            size_hint_max_x:300
-            canvas:
-                Color:
-                    rgba: 1, .3, .8, .5
-            id:measurementPoint_spinner
-            text_autoupdate:True
-            on_press:root.selectedNewPoint()
-
         Button:
-            #background_normal:''
-            #background_color:(0,0,0,0)
+            # background_normal:''
+            # background_color:(0,0,0,0)
             size_hint_max_x:40
-            #on_press:self.background_color=(1,0,0,1)
-            on_release:root.add_measurePoint()
+            on_release:root.rsaConnection()
             size_hint_x:.2
             Image:
-                source: 'img/plus.png'
+                id:connection_button_image
+                source: 'img/disconnected.png'
                 # y: self.parent.y
                 # x: self.parent.x
                 center_x: self.parent.center_x
@@ -79,31 +91,31 @@
             FrequencyToggleButton:
                 id:Gen1Button
                 state:'down'
-                text:str(int(app.config.get("F1","F1Center"))/(1000000)) +" MHz"
+                text:str(int(app.config.get("Range1","centerFreq"))/(1000000)) +" MHz"
             FrequencyToggleButton:
 
-                text:str(int(app.config.get("F2","F2Center"))/(1000000)) +" MHz"
+                text:str(int(app.config.get("Range2","centerFreq"))/(1000000)) +" MHz"
             FrequencyToggleButton:
 
-                text:str(int(app.config.get("F3","F3Center"))/(1000000)) +" MHz"
+                text:str(int(app.config.get("Range3","centerFreq"))/(1000000)) +" MHz"
             FrequencyToggleButton:
 
-                text:str(int(app.config.get("F4","F4Center"))/(1000000)) +" MHz"
+                text:str(int(app.config.get("Range4","centerFreq"))/(1000000)) +" MHz"
             FrequencyToggleButton:
 
-                text:str(int(app.config.get("F5","F5Center"))/(1000000)) +" MHz"
+                text:str(int(app.config.get("Range5","centerFreq"))/(1000000)) +" MHz"
             FrequencyToggleButton:
 
-                text:str(int(app.config.get("F6","F6Center"))/(1000000)) +" MHz"
+                text:str(int(app.config.get("Range6","centerFreq"))/(1000000)) +" MHz"
             FrequencyToggleButton:
 
-                text:str(int(app.config.get("F7","F7Center"))/(1000000)) +" MHz"
+                text:str(int(app.config.get("Range7","centerFreq"))/(1000000)) +" MHz"
             FrequencyToggleButton:
 
-                text:str(int(app.config.get("F8","F8Center"))/(1000000)) +" MHz"
+                text:str(int(app.config.get("Range8","centerFreq"))/(1000000)) +" MHz"
             FrequencyToggleButton:
 
-                text:str(int(app.config.get("F9","F9Center"))/(1000000)) +" MHz"
+                text:str(int(app.config.get("Range9","centerFreq"))/(1000000)) +" MHz"
         PlotArea:
             id:plotArea
             size_hint_x:.8
